@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rockets</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../models/rocket.js"></script>
+    <script src="../models/propulsor.js"></script>
+    <script src="../controllers/controller.js"></script>
+
+</head>
+
+<body>
+
+    <div class="d-md-flex h-md-100 align-items-center">
+        <!-- First Half -->
+        <div class="col-md-6 p-0 bg-indigo h-md-100">
+            <h1>To the Moon!</h1>
+            <p>Mission control - Apolo</p>
+            <div class="text-white d-md-flex align-items-center h-90 text-center justify-content-center">
+                <div class="logoarea pt-5 pb-5">
+                    <div class="row pt-5 pb-5">
+                        <div class="col-6">
+                            <button class="btn btn-info btn-circle btn-lg" onclick="javascript:createRocket(1)"><i
+                                    class="glyphicon glyphicon-chevron-down" aria-hidden="true"></i>Create
+                                Rocket#1</button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-info btn-circle btn-lg" onclick="javascript:createRocket(2)"><i
+                                    class="glyphicon glyphicon-chevron-down" aria-hidden="true"></i>Create
+                                Rocket#2</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <img class="map" src="../img/control_panel.jfif" usemap="#workmap" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-white d-md-flex align-items-center h-10 text-center justify-content-center">
+                <div class="col-md-6 p-0 bg-indig">
+                    <p>Rocket#1</p>
+                    <div id="info_32WESSDS"></div>
+                </div>
+                <div class="col-md-6 p-0 bg-indigo">
+                    <p>Rocket#2</p>
+                    <div id="info_LDSFJA32"></div>
+                </div>
+            </div>
+        </div>
+
+        <map name="workmap">
+            <area class="r1minus" shape="circle" coords="180,315,25" href="#" onclick="javascript:accelerate(1,-10);">
+            <area class="r1plus" shape="circle" coords="270,315,25" href="#" onclick="javascript:accelerate(1,10);">
+            <area class="r2minus" shape="circle" coords="360,315,25" href="#" onclick="javascript:accelerate(2,-10);">
+            <area class="r2plus" shape="circle" coords="450,315,25" href="#" onclick="javascript:accelerate(2,10);">
+        </map>
+
+        <!-- Second Half -->
+        <div class="col-md-6 p-0 bg-white h-md-100 loginarea">
+            <div class="d-md-flex align-items-center h-md-100 justify-content-center">
+                <div class="canvas">
+                    <div class="rocket d-none" id='32WESSDS'>
+                        <i>R#1</i>
+                        <img src="../img/spacex.png" alt="">
+                        <!-- <span></span> -->
+                    </div>
+                    <div class="rocket d-none" id='LDSFJA32'>
+                        <i>R#2</i>
+                        <img src="../img/spacex.png" alt="">
+                        <!-- <span></span> -->
+                    </div>
+                    <div id='msg'>
+                        <h3>No Rockets in platform!</h3>
+                        <p>Please, create r#1 & r#2</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="../assets/js/jquery.maphilight.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script>
+        $('.map').maphilight({
+
+            // fill the shape
+            fill: true,
+
+            // fill color
+            fillColor: '000000',
+
+            // fill opacity
+            fillOpacity: 0.2,
+
+            // outline the shape
+            stroke: true,
+
+            // stroke color
+            strokeColor: 'ff0000',
+
+            // stroke opacity
+            strokeOpacity: 1,
+
+            // stroke width
+            strokeWidth: 1,
+
+            // fade in the shapes on mouseover
+            fade: true,
+
+            // always show the hilighted areas
+            alwaysOn: false,
+
+            // never show the hilighted areas
+            neverOn: false,
+
+            // The name of an attribute to group areas by, or a selector for elements in the map to group. 
+            // Or an array of the same
+            // If this is present then all areas in the map which have the same attribute value as the hovered area will hilight as well
+            groupBy: false,
+
+            // If true, applies the class on the <img> to the wrapper div maphilight created.
+            // If a string, that string is used as a class on the wrapper div.
+            wrapClass: true,
+
+            // apply a shadow to the shape
+            shadow: false,
+            shadowX: 0,
+            shadowY: 0,
+            shadowRadius: 6,
+            shadowColor: '000000',
+            shadowOpacity: 0.8,
+            // Can be 'outside', 'inside', or 'both'.
+            shadowPosition: 'outside',
+            // Can be 'stroke' or 'fill'
+            shadowFrom: false,
+
+        });
+
+
+        function move_rocket(rocket, power, altitude) {
+
+            document.getElementById(rocket).animate([
+                // keyframes
+                { transform: 'translateY(' + (power) + 'px)' }
+            ], {
+                // timing options
+                duration: 1000,
+                iterations: 1
+            });
+
+            setTimeout(() => {
+                document.getElementById(rocket).style.top = (altitude) + "px";
+            }, 1000);
+
+
+        }
+
+        function getOffset(el) {
+            const rect = el.getBoundingClientRect();
+            return {
+                left: rect.left + window.scrollX,
+                top: rect.top + window.scrollY
+            };
+        }
+
+        function stars(rocket, kN) {
+            let count = 50;
+            let canvas = document.querySelector('.canvas');
+
+            let i = 0;
+
+
+            while (i < count) {
+                let star = document.createElement('i');
+
+                let x = 0;
+                if (rocket == '32WESSDS')
+                    x = Math.floor(Math.random() * 270);
+
+                if (rocket == 'LDSFJA32')
+                    x = Math.floor(Math.random() * (280 + 175)) + 175;
+
+                let duration = Math.random() * 1 + kN;
+                let h = Math.random() * 100;
+
+                star.style.left = x + 'px';
+                star.style.width = 1 + 'px'
+                star.style.height = h + 'px';
+
+                star.style.animationDuration = duration + 's';
+
+                canvas.appendChild(star);
+
+                i++;
+            }
+        }
+
+        // setTimeout(function () {
+        //     document.getElementsByClassName("rocket").style.top = "100px";
+        // }, 3000)
+
+
+    </script>
+</body>
+
+</html>
